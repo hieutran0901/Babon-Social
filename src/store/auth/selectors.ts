@@ -5,3 +5,4 @@ import { initialState } from "./constants";
 const selectAuthStore = (state: any) => state.auth || initialState;
 
 export const selectUserInfo = createSelector([selectAuthStore], (state) => get(state, "userInfo", {}));
+export const selectIsLoadingAuth = createSelector([selectAuthStore], (state) => get(state, "isLoading", {}));

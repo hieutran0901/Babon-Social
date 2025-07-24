@@ -1,19 +1,26 @@
 import { privateRequest, publicRequest } from "@/request";
+import { loginApi, getMeApi } from "@/../api/users";
 
-const authServices = {
+import { v4 as uuid } from "uuid";
+
+const authServices: any = {
   clientLogin: ({ username, password }: any) => {
-    return publicRequest.request({
-      method: "POST",
-      url: "/login",
-      data: { username, password },
-    });
+    return loginApi({ username, password });
+
+    // return publicRequest.request({
+    //   method: "POST",
+    //   url: "/login",
+    //   data: { username, password },
+    // });
   },
 
-  clientGetMe: () => {
-    return privateRequest.request({
-      method: "GET",
-      url: "/me",
-    });
+  clientGetMe: ({ token }: any) => {
+    return getMeApi({ token });
+
+    // return privateRequest.request({
+    //   method: "GET",
+    //   url: "/me",
+    // });
   },
 };
 

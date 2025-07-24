@@ -4,6 +4,8 @@
   display: flex;
   gap: 20px;
   background-color: transparent;
+  padding-right: 10px;
+  min-height: 100vh;
 
   &.-dark {
     > .sidebar {

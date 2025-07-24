@@ -33,13 +33,13 @@ export const PostList: FC<IListPostsProps> = ({ posts, onNextPage, hasNextPage }
     },
   });
 
-  useEffect(() => {
-    document.pictureInPictureElement && document.exitPictureInPicture();
-  }, [postVideoPlaying]);
+  // useEffect(() => {
+  //   document.pictureInPictureElement && document.exitPictureInPicture();
+  // }, [postVideoPlaying]);
 
-  useEffect(() => {
-    if (!inView) videoRef?.current?.requestPictureInPicture();
-  }, [inView]);
+  // useEffect(() => {
+  //   if (!inView) videoRef?.current?.requestPictureInPicture();
+  // }, [inView]);
 
   const handleOpenModal =
     ({ active, post }: any) =>
@@ -94,7 +94,7 @@ export const PostList: FC<IListPostsProps> = ({ posts, onNextPage, hasNextPage }
                       setPostVideoPlaying(item?.id);
                     }}
                     onPause={() => {
-                      document?.pictureInPictureElement && document?.exitPictureInPicture();
+                      // document?.pictureInPictureElement && document?.exitPictureInPicture();
                       setPostVideoPlaying("");
                     }}
                     controls

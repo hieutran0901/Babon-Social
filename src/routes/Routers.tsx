@@ -13,7 +13,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 const Routers = () => {
   const dispatch = useAppDispatch();
   const auth = useSelector((state: any) => state?.auth);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -23,26 +23,6 @@ const Routers = () => {
       document?.pictureInPictureElement && document?.exitPictureInPicture();
     };
   }, [pathname]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("Token");
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
-
-    const getMe = async () => {
-      setToken(token);
-      await thunkWrapper({
-        promise: dispatch(getMeThunk()),
-        thunkAction: getMeThunk,
-        onSuccess: () => setIsLoading(false),
-        onError: () => setIsLoading(false),
-      });
-    };
-
-    getMe();
-  }, [dispatch]);
 
   if (isLoading) return <div></div>;
 

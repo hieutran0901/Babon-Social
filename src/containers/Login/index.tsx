@@ -6,12 +6,14 @@ import { GroupInput } from "@/components/compound";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { thunkWrapper } from "@/helpers";
-import { loginThunk } from "@/store/auth/thunk";
-import { useAppDispatch } from "@/store/hooks";
+import { getMeThunk, loginThunk } from "@/store/auth/thunk";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectIsLoadingAuth } from "@/store/auth/selectors";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isLoadingAuth = useAppSelector(selectIsLoadingAuth);
 
   const { setFieldValue, resetForm, handleSubmit, values, errors } = useFormik({
     initialValues: {
@@ -19,13 +21,17 @@ const Login = () => {
       password: "123456",
     },
 
-    onSubmit: async (values, { setSubmitting }) => {
-      await thunkWrapper({
-        promise: dispatch(loginThunk(values)),
-        thunkAction: loginThunk,
-        onSuccess: () => toast.success("Login successful !"),
-        onError: () => toast.error("Login failed !"),
-      });
+    onSubmit:  (values, { setSubmitting }) => {
+      dispatch(loginThunk(values));
+      // await thunkWrapper({
+      //   promise: dispatch(loginThunk(values)),
+      //   thunkAction: loginThunk,
+      //   onSuccess: () => {
+      //     toast.success("Login successful !");
+      //   },
+      //   onError: () => toast.error("Login failed !"),
+      //   onLoading: () => toast.success("Loading....")
+      // });
 
       setSubmitting(false);
       resetForm();
@@ -75,9 +81,13 @@ const Login = () => {
           error={errors.password}
         />
 
-        <Button fullWidth className="button" type="submit" variant="contained" color="light-green">
+       {isLoadingAuth &&  <Button disabled fullWidth className="button" type="submit" variant="contained" color="light-green">
           Login
-        </Button>
+        </Button>  }
+
+        {!isLoadingAuth &&  <Button fullWidth className="button" type="submit" variant="contained" color="light-green">
+          Login
+        </Button>  }
 
         <Button fullWidth className="button -register" variant="contained" onClick={() => navigate("/register")}>
           Register
